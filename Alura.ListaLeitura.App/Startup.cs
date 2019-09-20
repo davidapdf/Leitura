@@ -52,7 +52,10 @@ namespace Alura.ListaLeitura.App
             var html = @"
                         <html>
                              <form action = '/Cadastro/Incluir'>
+                                 <label>Título:</label>
                                  <input name='Titulo'/>
+                                 <br/>
+                                 <label>Autor:</label>
                                  <input name='Autor'/>
                                  <button>Gravar</button>
                              </form>
