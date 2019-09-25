@@ -5,12 +5,11 @@ using System.Text;
 
 namespace Alura.ListaLeitura.App.HTML
 {
- public   class HtmlUtils
+    public class HtmlUtils
     {
-        public static string CarregaArquivoHTML(string Arquivo)
+        public static string CarregaArquivoHTML(string nomeArquivo)
         {
-
-            var nomeCompletoArquivo = $"../../../HTML/{Arquivo}.html";
+            var nomeCompletoArquivo = $"HTML/{nomeArquivo}.html";
             using (var arquivo = File.OpenText(nomeCompletoArquivo))
             {
                 return arquivo.ReadToEnd();

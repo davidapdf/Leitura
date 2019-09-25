@@ -12,76 +12,51 @@ using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logica
 {
-  public  class LivrosLogica
+    public class LivrosController
     {
-
-        public static Task ExibeDetalhe(HttpContext context)
-        {
-            int id = Convert.ToInt32(context.GetRouteValue("id"));
-            var repo = new LivroRepositorioCSV();
-            var livro = repo.Todos.First(l => l.Id == id);
-            return context.Response.WriteAsync(livro.Detalhes());
-
-        }
-
-
-        public static string CarregaLista(IEnumerable<Livro> livros)
+        private static string CarregaLista(IEnumerable<Livro> livros)
         {
             var conteudoArquivo = HtmlUtils.CarregaArquivoHTML("lista");
             foreach (var livro in livros)
             {
-                conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li> #NOVO-ITEM#");
+                conteudoArquivo = conteudoArquivo
+                    .Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li>#NOVO-ITEM#");
             }
             return conteudoArquivo.Replace("#NOVO-ITEM#", "");
         }
-        
-
 
         public static Task LivrosParaLer(HttpContext context)
         {
-
             var _repo = new LivroRepositorioCSV();
-            var conteudoArquivo = HtmlUtils.CarregaArquivoHTML("para-ler");
-
-            foreach (var livro in _repo.ParaLer.Livros)
-            {
-                conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li> #NOVO-ITEM#");
-            }
-            conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
-
-            return context.Response.WriteAsync(conteudoArquivo);
-
-            //   return context.Response.WriteAsync(_repo.ParaLer.ToString());
+            var html = CarregaLista(_repo.ParaLer.Livros);
+            return context.Response.WriteAsync(html);
         }
 
         public static Task LivrosLendo(HttpContext context)
         {
-
             var _repo = new LivroRepositorioCSV();
-            var conteudoArquivo = HtmlUtils.CarregaArquivoHTML("para-ler");
-
-            foreach (var livro in _repo.Lendo.Livros)
-            {
-                conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li> #NOVO-ITEM#");
-            }
-            conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
-
-            return context.Response.WriteAsync(conteudoArquivo);
+            var html = CarregaLista(_repo.Lendo.Livros);
+            return context.Response.WriteAsync(html);
         }
 
         public static Task LivrosLidos(HttpContext context)
         {
-
             var _repo = new LivroRepositorioCSV();
-            var conteudoArquivo = HtmlUtils.CarregaArquivoHTML("para-ler");
-
-            foreach (var livro in _repo.Lidos.Livros)
-            {
-                conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", $"<li>{livro.Titulo} - {livro.Autor}</li> #NOVO-ITEM#");
-            }
-            conteudoArquivo = conteudoArquivo.Replace("#NOVO-ITEM#", "");
-
-            return context.Response.WriteAsync(conteudoArquivo);
+            var html = CarregaLista(_repo.Lidos.Livros);
+            return context.Response.WriteAsync(html);
         }
+
+        public string Detalhes(int id)
+        {
+            var repo = new LivroRepositorioCSV();
+            var livro = repo.Todos.First(l => l.Id == id);
+            return livro.Detalhes();
+        }
+
+        public string Teste()
+        {
+            return "nova funcionalidade implementada";
+        }
+
     }
 }
