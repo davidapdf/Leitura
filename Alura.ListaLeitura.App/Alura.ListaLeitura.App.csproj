@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -13,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Repositorio\livros.csv">
+    <None Update="Views\Cadastro\formulario.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Livros\lista.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

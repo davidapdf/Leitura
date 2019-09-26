@@ -2,6 +2,7 @@
 using Alura.ListaLeitura.App.Negocio;
 using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Alura.ListaLeitura.App.Logica
 {
     public class CadastroController
     {
+
         public string Incluir(Livro livro)
         {
             var repo = new LivroRepositorioCSV();
@@ -21,23 +23,11 @@ namespace Alura.ListaLeitura.App.Logica
             return "O livro foi adicionado com sucesso";
         }
 
-        public static Task ProcessaFormulario(HttpContext context)
+        public IActionResult ExibeFormulario()
         {
-            var livro = new Livro()
-            {
-                Titulo = context.Request.Form["titulo"].First(),
-                Autor = context.Request.Form["autor"].First(),
-            };
-
-            var repo = new LivroRepositorioCSV();
-            repo.Incluir(livro);
-            return context.Response.WriteAsync("O livro foi adicionado com sucesso");
-        }
-
-        public static Task ExibeFormulario(HttpContext context)
-        {
-            var html = HtmlUtils.CarregaArquivoHTML("formulario");
-            return context.Response.WriteAsync(html);
+            //var html = HtmlUtils.CarregaArquivoHTML("formulario");
+            var html = new ViewResult { ViewName = "formulario" };
+            return html;
         }
     }
 }
